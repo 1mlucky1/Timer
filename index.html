@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Timer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #timer {
+            font-size: 72px;
+            font-weight: bold;
+            color: #333;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #startStop {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="timer">00:00</div>
+        <button id="startStop">새 타이머 추가</button>
+    </div>
+
+    <script>
+        let timer;
+        let isRunning = false;
+        let seconds = 0;
+
+        const timerDisplay = document.getElementById('timer');
+        const startStopButton = document.getElementById('startStop');
+
+        function updateDisplay() {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    seconds++;
+                    updateDisplay();
+                }, 1000);
+                startStopButton.textContent = '정지';
+            } else {
+                clearInterval(timer);
+                isRunning = false;
+                startStopButton.textContent = '새 타이머 추가';
+            }
+        }
+
+        startStopButton.addEventListener('click', startTimer);
+    </script>
+</body>
+</html>
